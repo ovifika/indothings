@@ -14,4 +14,9 @@ Silahkan kunjungi link berikut ini https://indothings.netlify.app/
 - Breadboard
 - Kabel Penghubung
 
+---
 
+## ```Pinout Wemos Lolin32 lite```
+![wemos lolin 32 lite](https://user-images.githubusercontent.com/87508128/125993990-066af1c1-ebcd-46ac-955e-0694742dc66e.jpg)
+
+## ```Skema rangkaian```
