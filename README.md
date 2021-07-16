@@ -20,3 +20,6 @@ Silahkan kunjungi link berikut ini https://indothings.netlify.app/
 ![wemos lolin 32 lite](https://user-images.githubusercontent.com/87508128/125993990-066af1c1-ebcd-46ac-955e-0694742dc66e.jpg)
 
 ## ```Skema rangkaian```
+![Skema rangkaian](https://user-images.githubusercontent.com/87508128/125996173-76ce6b45-02cb-4601-9a37-9b84677fc835.png)
+
+---
