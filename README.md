@@ -6,6 +6,9 @@ website sederhana yang dapat memanfaatkan Read API thingspeak sebagai penjembata
 ## ```Demo Website```
 Silahkan kunjungi link berikut ini https://indothings.netlify.app/
 
+## ```Wesite Thingspeak```
+Sebagai bahan perbandingan data cek link berikut [ini](https://thingspeak.com/channels/1446293)
+
 ## ```Alat dan Bahan Tugas```
 - Wemos Lolin32 Lite
 - Sensor DHT11
