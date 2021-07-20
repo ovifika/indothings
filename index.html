@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- refres kontem -->
+    <!-- <meta http-equiv="refresh" content="5" /> -->
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- icon -->
+    <link rel="shortcut icon" href="ico.jpg" />
+    <title>Monitoring ESP-32 - indothings</title>
+    <style>
+      /* styles */
+      * {
+        font-family: "Roboto", sans-serif;
+        text-decoration: none;
+        list-style: none;
+        box-shadow: none !important;
+      }
+      body {
+        overflow-x: hidden;
+        background-image: url("bg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .f-xl {
+        font-size: 2rem;
+      }
+      ::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+      }
+      ::-webkit-scrollbar-track {
+        border-width: 0;
+        background: #eee;
+      }
+      .underline-none {
+        text-decoration: none;
+      }
+      @media (max-width: 575.98px) {
+        #app {
+          overflow-x: hidden !important;
+        }
+        .scrb::-webkit-scrollbar {
+          height: 0.3rem;
+        }
+        .scrb::-webkit-scrollbar-thumb:horizontal {
+          background-color: #ccc;
+        }
+        .scrb::-webkit-scrollbar-track {
+          border-width: 0;
+          background: #eee;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- navbar atau header -->
+      <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <span class="navbar-brand mb-0 h1">indothings</span>
+        </div>
+      </nav>
+      <!-- conten -->
+
+      <div class="container text-center min-vh-100" style="padding-top: 80px">
+        <div class="row">
+          <div class="col-12">
+            <h2>Data Pengukuran</h2>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Temperatur -->
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-3">
+            <div
+              class="
+                card
+                text-light
+                h-100
+                border-dark border-2
+                rounded-5
+                bg-transparent
+              "
+            >
+              <div class="card-header bg-dark">
+                <h4 class="mt-2">Temperature</h4>
+              </div>
+              <div class="card-body text-dark">
+                <div
+                  v-if="loading"
+                  class="spinner-grow"
+                  style="width: 1rem; height: 1rem"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <span v-else class="f-xl">{{ temp_data }}&deg;C</span>
+              </div>
+            </div>
+          </div>
+          <!-- humd -->
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-3">
+            <div
+              class="
+                card
+                text-light
+                h-100
+                border-dark
+                rounded-5
+                border-2
+                bg-transparent
+              "
+            >
+              <div class="card-header bg-dark">
+                <h4 class="mt-2">Humidity</h4>
+              </div>
+              <div class="card-body text-dark">
+                <div
+                  v-if="loading"
+                  class="spinner-grow"
+                  style="width: 1rem; height: 1rem"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <span v-else class="f-xl">{{ humd_data }}%</span>
+              </div>
+            </div>
+          </div>
+          <!-- kelemababan tanah -->
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-3">
+            <div
+              class="
+                card
+                text-light
+                h-100
+                border-dark
+                rounded-5
+                border-2
+                bg-transparent
+              "
+            >
+              <div class="card-header bg-dark">
+                <h4 class="mt-2">Kelembaban Tanah</h4>
+              </div>
+              <div class="card-body text-dark">
+                <div
+                  v-if="loading"
+                  class="spinner-grow"
+                  style="width: 1rem; height: 1rem"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <span v-else class="f-xl">{{ kelembaban_data }}%</span>
+              </div>
+            </div>
+          </div>
+          <!-- intensitas cahaya -->
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-3">
+            <div
+              class="
+                card
+                text-light
+                h-100
+                border-dark
+                rounded-5
+                border-2
+                bg-transparent
+              "
+            >
+              <div class="card-header bg-dark">
+                <h4 class="mt-2">Intensitas Cahaya</h4>
+              </div>
+              <div class="card-body text-dark">
+                <div
+                  v-if="loading"
+                  class="spinner-grow"
+                  style="width: 1rem; height: 1rem"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <span v-else class="f-xl">{{ intensitas_data }}%</span>
+              </div>
+            </div>
+          </div>
+          <!--  -->
+        </div>
+      </div>
+      <!-- footer -->
+      <div class="footer text-center bg-dark w-100 p-3">
+        <span class="text-white"
+          >&copy; 2021 Copyright:
+          <a
+            class="text-white underline-none"
+            href="https://github.com/ovifika/indothings"
+            target="_blank"
+            >indothings</a
+          ></span
+        >
+      </div>
+    </div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- axios cdn -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- vue cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          loading: false,
+          temp_data: 0,
+          humd_data: 0,
+          kelembaban_data: 0,
+          intensitas_data: 0,
+          timerOn: true,
+          second: 0,
+        },
+        watch: {
+          second(val) {
+            if (val == 0) {
+              this.timerOn = true;
+              this.load();
+            }
+          },
+        },
+        mounted() {
+          this.load();
+        },
+        methods: {
+          async load() {
+            this.loading = true;
+            this.timer(8);
+            const res = await this.getData();
+            if (res) {
+              this.loading = false;
+            } else {
+              this.loading = false;
+            }
+          },
+          getData() {
+            return axios
+              .get(
+                "https://realtimesensoriot-66d69-default-rtdb.firebaseio.com/Data.json"
+              )
+              .then((res) => {
+                this.temp_data = res.data.temperature;
+                this.humd_data = res.data.humidity;
+                this.kelembaban_data = res.data.kelembaban;
+                this.intensitas_data = res.data.intensitas;
+                return true;
+              })
+              .catch((err) => {
+                this.temp_data = 0;
+                this.humd_data = 0;
+                this.kelembaban_data = 0;
+                this.intensitas_data = 0;
+                if (err) {
+                  return false;
+                }
+              });
+          },
+          timer(setPoint) {
+            var sec = setPoint % 60;
+            this.second = sec;
+            setPoint -= 1;
+            if (setPoint >= 0 && this.timerOn) {
+              setTimeout(() => {
+                this.timer(setPoint);
+              }, 1000);
+              return;
+            }
+            if (!this.timerOn) {
+              return;
+            }
+            this.timerOn = false;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
